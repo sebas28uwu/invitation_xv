@@ -1,138 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Escaner QR Mis XV</title>
-  <!-- Estilos mínimos -->
+  <meta charset="UTF-8">
+  <title>Escanear QR de Invitación</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #fbeff1;
-      margin: 0;
-      padding: 0;
-    }
+    body { background: #fbeff2; font-family: Arial, sans-serif; text-align: center; }
     h2 { margin-top: 32px; }
-    #reader { 
-      margin: 30px auto 10px auto;
-      width: 300px;
-      min-height: 280px;
-    }
-    .info {
-      background: #fff3fa;
-      border-radius: 8px;
-      margin: 0 auto 10px auto;
-      padding: 16px 12px;
-      box-shadow: 0 2px 10px #0002;
-      max-width: 340px;
-      font-size: 1.15em;
+    #reader { margin: 20px auto; width: 350px; }
+    .info-box {
+      margin: 40px auto;
+      padding: 24px 32px;
+      background: #fff0f4;
       color: #e14e56;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #f5767322;
+      width: 380px;
+      font-size: 1.2em;
     }
-    button {
-      margin-top: 18px;
-      background: #ff5757;
-      color: #fff;
-      padding: 10px 20px;
+    #btn-confirmar, #btn-nuevo {
+      margin: 10px 10px 0 0;
+      padding: 10px 24px;
       border: none;
-      border-radius: 10px;
-      font-size: 1.13em;
+      border-radius: 8px;
+      font-size: 1em;
       cursor: pointer;
     }
-    button:disabled { background: #bbb; color: #fff; }
+    #btn-confirmar { background: #f57673; color: white; }
+    #btn-nuevo { background: #ffe1ea; color: #e14e56; }
   </style>
-  <!-- Librería scanner QR -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
 </head>
 <body>
   <h2>Escanear QR de Invitación</h2>
   <div id="reader"></div>
-  <div class="info" id="info">Esperando escaneo...</div>
-
+  <div id="info" class="info-box">Esperando escaneo...</div>
   <script>
-    // SheetDB URL
+    // Cambia este enlace por tu propio endpoint de SheetDB:
     const SHEETDB_URL = "https://sheetdb.io/api/v1/fouso319wc8rv";
 
-    // 1. Inicializar Scanner
-    const infoDiv = document.getElementById('info');
-    const scanner = new Html5Qrcode("reader");
-
-    function mostrarMensaje(msj, color = '#e14e56') {
-      infoDiv.innerHTML = `<span style="color:${color};">${msj}</span>`;
+    // Función para buscar el invitado en SheetDB
+    async function buscarInvitado(nombre, cantidad) {
+      const url = `${SHEETDB_URL}?nombre=${encodeURIComponent(nombre)}&cantidad_invitados=${encodeURIComponent(cantidad)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data && data.length > 0 ? data[0] : null;
     }
 
-    // 2. Iniciar escaneo
-    scanner.start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: { width: 230, height: 230 } },
-      qrText => {
-        scanner.pause(); // Pausa para evitar dobles lecturas
-        mostrarMensaje("Procesando invitación...");
+    // Función para marcar como asistido
+    async function confirmarAsistencia(row_id) {
+      // Busca el registro y actualiza el campo 'procesado' a 'SI'
+      await fetch(`${SHEETDB_URL}/id/${row_id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ procesado: 'SI' })
+      });
+    }
 
-        // Esperamos formato: nombre|cantidad  (puedes ajustar esto)
-        let nombre = '', cantidad = '';
-        if (qrText.includes('|')) {
-          [nombre, cantidad] = qrText.split('|');
-          nombre = nombre.trim();
-          cantidad = cantidad.trim();
-        } else {
-          mostrarMensaje("QR inválido. Asegúrate de escanear la invitación oficial.");
-          scanner.resume(); return;
-        }
+    // Inicializar el lector de QR
+    const info = document.getElementById('info');
+    let lastQR = "";
 
-        // Buscar en SheetDB por nombre y cantidad
-        fetch(`${SHEETDB_URL}?nombre=${encodeURIComponent(nombre)}&cantidad_invitados=${encodeURIComponent(cantidad)}`)
-          .then(res => res.json())
-          .then(rows => {
-            if (rows.length === 0) {
-              mostrarMensaje("Invitación NO encontrada o datos inválidos.<br>Verifica nombre y cantidad.");
-              setTimeout(() => scanner.resume(), 2500);
-            } else {
-              const persona = rows[0];
-              // Mostrar datos
-              let invitados = '';
-              for (let i = 1; i < cantidad; i++) {
-                if (persona[`invitado_${i}`]) {
-                  invitados += `<li>${persona[`invitado_${i}`]}</li>`;
-                }
-              }
-              infoDiv.innerHTML = `
-                <b>Invitado/a principal:</b> ${persona.nombre} ${persona.apellido}<br>
-                <b>Cantidad:</b> ${persona.cantidad_invitados}<br>
-                ${invitados ? `<b>Acompañantes:</b><ul>${invitados}</ul>` : ''}
-                <button id="btn-asistido">Marcar como asistido</button>
-                <br><button id="btn-nuevo">Escanear otro</button>
-              `;
-
-              // Botón para marcar asistencia
-              document.getElementById('btn-asistido').onclick = () => {
-                // (Ajusta el campo según tu base, aquí es "asistio")
-                fetch(`${SHEETDB_URL}/nombre/${encodeURIComponent(persona.nombre)}`, {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ data: { asistio: "SI" } })
-                })
-                .then(() => {
-                  mostrarMensaje("✅ Asistencia registrada.", "#25c281");
-                  setTimeout(() => scanner.resume(), 1500);
-                })
-                .catch(() => mostrarMensaje("❌ Error al marcar asistencia."));
-              };
-
-              // Botón para nuevo escaneo
+    function reiniciarScanner(html5QrCode) {
+      info.innerHTML = "Esperando escaneo...";
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        async qrText => {
+          if (qrText === lastQR) return; // Evitar doble scan
+          lastQR = qrText;
+          html5QrCode.stop(); // Detener hasta nueva acción
+          const [nombre, cantidad] = qrText.split('|');
+          info.innerHTML = `<b>Buscando invitado...</b>`;
+          const invitado = await buscarInvitado(nombre, cantidad);
+          if (invitado) {
+            info.innerHTML = `
+              <b>Nombre:</b> ${invitado.nombre} <br>
+              <b>Cantidad invitados:</b> ${invitado.cantidad_invitados}<br>
+              <b>Acompañantes:</b> ${invitado.invitado_1 || ''} ${invitado.invitado_2 || ''} ${invitado.invitado_3 || ''}
+              <br><br>
+              <button id="btn-confirmar">Confirmar asistencia</button>
+              <button id="btn-nuevo">Escanear otro</button>
+            `;
+            document.getElementById('btn-confirmar').onclick = async () => {
+              await confirmarAsistencia(invitado.id); // Usa el id real del registro
+              info.innerHTML = `<b>¡Asistencia confirmada!</b><br>
+                                <button id="btn-nuevo">Escanear otro</button>`;
               document.getElementById('btn-nuevo').onclick = () => {
-                mostrarMensaje('Esperando escaneo...');
-                scanner.resume();
+                lastQR = "";
+                reiniciarScanner(html5QrCode);
               };
-            }
-          })
-          .catch(() => {
-            mostrarMensaje("❌ Error consultando la base de datos.");
-            setTimeout(() => scanner.resume(), 2000);
-          });
-      },
-      error => { /* Puede ignorarse */ }
-    );
+            };
+            document.getElementById('btn-nuevo').onclick = () => {
+              lastQR = "";
+              reiniciarScanner(html5QrCode);
+            };
+          } else {
+            info.innerHTML = `No encontrado o datos incorrectos.<br>
+                              <button id="btn-nuevo">Intentar de nuevo</button>`;
+            document.getElementById('btn-nuevo').onclick = () => {
+              lastQR = "";
+              reiniciarScanner(html5QrCode);
+            };
+          }
+        },
+        errorMsg => { /* Ignora los errores de lectura */ }
+      );
+    }
+
+    window.onload = () => {
+      const html5QrCode = new Html5Qrcode("reader");
+      reiniciarScanner(html5QrCode);
+    };
   </script>
 </body>
 </html>
