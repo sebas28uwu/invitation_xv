@@ -1,0 +1,39 @@
+body {
+  background: #fbeff2;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+h2 {
+  margin-top: 32px;
+}
+#reader {
+  margin: 20px auto;
+  width: 350px;
+}
+.info-box {
+  margin: 40px auto;
+  padding: 24px 32px;
+  background: #fff0f4;
+  color: #e14e56;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #f5767322;
+  width: 380px;
+  font-size: 1.2em;
+}
+#btn-confirmar,
+#btn-nuevo {
+  margin: 10px 10px 0 0;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+}
+#btn-confirmar {
+  background: #f57673;
+  color: white;
+}
+#btn-nuevo {
+  background: #ffe1ea;
+  color: #e14e56;
+}
