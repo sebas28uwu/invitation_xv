@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Mis XV</title>
+     <title style="font-family: 'Alex Brush', cursive;">Cielo Noelia Saori</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Parisienne&display=swap" rel="stylesheet" />
+     <link rel="icon" type="image/png" href="/img/icono.png" sizes="48x48" />
     <link rel="stylesheet" href="/styles/styles.css" />
 </head>
 
@@ -134,8 +135,13 @@
             </form>
         </div>
     </div>
+            <button id="music-toggle" style="position:fixed;bottom:24px;right:24px;z-index:2000;background:rgba(255,255,255,0.7);border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+      <span id="music-icon" style="font-size:1.5rem;">&#127925;</span>
+    </button>
+    <audio id="bg-music" src="/audio/love_story.mp3" autoplay loop></audio>
     <script src="/js/xv.js"></script>
-    <audio id="bg-music" src="/audio/nocrezcasmas.mp3" autoplay loop></audio>
+
+
 </body>
 
 </html>
