@@ -1,3 +1,5 @@
+
+  
       const slides = [
         [
           "Con todo el amor que nos llena el alma,",
@@ -202,7 +204,7 @@
       }
 
       function playMusic() {
-        music.volume = 0.5;
+        music.volume = 1;
         music.play();
         isPlaying = true;
         updateMusicIcon();
@@ -226,7 +228,7 @@
       music.addEventListener('pause', () => { isPlaying = false; updateMusicIcon(); });
       document.addEventListener('DOMContentLoaded', () => {
         // Intentar reproducir automáticamente
-        music.volume = 0.5;
+        music.volume = 1;
         music.play().catch(() => {
           // Si falla, esperar interacción
           document.addEventListener('click', tryAutoplay);
@@ -238,3 +240,4 @@
         if (music.paused) playMusic();
         else pauseMusic();
       };
+ 
