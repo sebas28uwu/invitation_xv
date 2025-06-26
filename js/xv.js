@@ -1,7 +1,3 @@
-// =====================
-// JS extraído de prueba2.html
-// =====================
-
 const slides = [
   [
     "Con todo el amor que nos llena el alma,",
