@@ -1,0 +1,723 @@
+/* ===== Reset & Fullscreen ===== */
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: url("/img/background_pc.png") no-repeat center/cover;
+}
+
+@media (max-width: 768px) {
+  body {
+    background: url("/img/background_mobile.png") no-repeat center/cover;
+  }
+
+  #type-container.slide-2 #typed {
+    /* por ejemplo, bajas un poco el margin-top */
+    margin-top: 10vh !important;
+    /* si quieres, ajusta aquí font-size o cualquier otro desplazamiento */
+    /* font-size: clamp(1rem,4vw,2rem);  <-- si fuese necesario */
+  }
+
+  #type-container.slide-3 #typed {
+    /* por ejemplo, bajas un poco el margin-top */
+    margin-top: 5vh;
+    text-align: center;
+    /* si quieres, ajusta aquí font-size o cualquier otro desplazamiento */
+    /* font-size: clamp(1rem,4vw,2rem);  <-- si fuese necesario */
+  }
+
+  /* Intro "shine" más pequeño en móvil */
+  #intro .btn-shine {
+    font-size: clamp(1rem, 22vw, 24rem) !important;
+    line-height: 1.1;
+  }
+
+  /* Wrapper de texto en móvil */
+  #typed-wrapper {
+    width: 95vw;
+    max-height: 60vh;
+    padding: 0.5rem;
+  }
+
+  /* Texto más pequeño en móvil */
+  #typed {
+    margin-top: -20px !important;
+    font-size: clamp(1rem, 8vw, 24rem) !important;
+  }
+
+  /* Oculta botón "back" en móvil */
+  .btn-back {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mariposa[data-dir="extra"] {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Tiara más pequeña en móvil */
+  #type-container .tiara {
+    width: 100px !important;
+    height: 100px !important;
+    margin-top: 20% !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Mariposas botón centrar dinámico en móvil */
+  .mariposa {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: 10% !important;
+    top: auto !important;
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+
+  /* Tamaño reducido */
+
+  .butterfly-1 {
+    left: 50%;
+    top: 10vh;
+    /* 10% desde arriba */
+    transform: translateX(-50%);
+  }
+
+  /* intro → slide0 */
+}
+
+/* ===== Intro "shine" ===== */
+#intro .btn-shine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+  line-height: 1.2;
+  font-family: "Alex Brush", cursive;
+  background: linear-gradient(
+    to right,
+    #bc6e6e 0%,
+    #e2cadbf1 20%,
+    #bc6e6e 30%,
+    #bc6e6e 50%,
+    #e2cadbf1 80%,
+    #bc6e6e 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shine 10s linear infinite;
+  pointer-events: none;
+  text-align: center;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* ===== Typewriter container ===== */
+#type-container {
+  display: none;
+  position: absolute;
+  inset: 0;
+  font-family: "Alex Brush", cursive;
+  color: #bc6e6e;
+  text-align: center;
+}
+
+#type-container .tiara {
+  width: 100px;
+  margin: 1rem auto;
+  display: block;
+  align-items: center;
+}
+
+/* wrapper para controlar límites y evitar scroll */
+#typed-wrapper {
+  width: 90vw;
+  max-width: 600px;
+  max-height: 70vh;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#typed {
+  font-size: clamp(1rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin: 2rem 1rem;
+  min-height: calc(100vh - 4rem);
+}
+
+/* ===== Mariposas-botón ===== */
+.mariposa {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  background: none;
+}
+
+.mariposa-turn {
+  width: 100%;
+  height: 100%;
+  perspective: 800px;
+}
+
+.mariposa-flutter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 2rem;
+  height: 8rem;
+  background: url("/img/cuerpo_mariposa.png") center/contain no-repeat;
+  transform-style: preserve-3d;
+  transform: rotateX(25deg) rotateY(5deg);
+}
+
+.mariposa-flutter::before,
+.mariposa-flutter::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  width: 250%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
+}
+
+.mariposa-flutter::before {
+  left: 55%;
+  background-image: url("/img/ala2.png");
+  transform-origin: 0% 50%;
+  animation-name: flutter-r;
+}
+
+.mariposa-flutter::after {
+  right: 55%;
+  background-image: url("/img/ala1.png");
+  transform-origin: 100% 50%;
+  animation-name: flutter-l;
+}
+
+@keyframes flutter-r {
+  0%,
+  100% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(-40deg);
+  }
+}
+
+@keyframes flutter-l {
+  0%,
+  100% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(40deg);
+  }
+}
+
+.mariposa-bonita .mariposa-turn {
+  animation: flap 0.8s infinite ease-in-out;
+}
+
+@keyframes flap {
+  0%,
+  100% {
+    transform: rotateX(25deg) rotateY(5deg) scaleY(1);
+  }
+
+  50% {
+    transform: rotateX(25deg) rotateY(5deg) scaleY(0.9);
+  }
+}
+
+/* ===== Posiciones por slide (escritorio) ===== */
+.butterfly-1 {
+  left: 50%;
+  top: 10vh;
+  /* 15% de la altura de la ventana */
+  transform: translateX(-50%);
+}
+
+/* intro → slide0 */
+.butterfly-2 {
+  position: absolute;
+  /* 50% desde la izquierda del contenedor,  
+     luego lo desplazamos la mitad de su ancho */
+  right: 20%;
+  /* en escritorio: ¾ de ancho */
+  top: 50%;
+  /* en escritorio: 60% de altura */
+  transform: translate(-50%, -50%);
+}
+
+/* slide0 next */
+.butterfly-6 {
+  position: absolute;
+  left: 25%;
+  /* en escritorio: ¾ de ancho */
+  top: 50%;
+  /* en escritorio: 60% de altura */
+  transform: translate(-50%, -50%);
+}
+
+/* slide0 back */
+.butterfly-3 {
+  position: absolute;
+  /* 50% desde la izquierda del contenedor,  
+     luego lo desplazamos la mitad de su ancho */
+  right: 20%;
+  /* en escritorio: ¾ de ancho */
+  top: 50%;
+  /* en escritorio: 60% de altura */
+  transform: translate(-50%, -50%);
+}
+
+/* slide1 next */
+.butterfly-7 {
+  position: absolute;
+  left: 25%;
+  /* en escritorio: ¾ de ancho */
+  top: 50%;
+  /* en escritorio: 60% de altura */
+  transform: translate(-50%, -50%);
+}
+
+/* slide1 back */
+.butterfly-4 {
+  top: 20%;
+  right: 20%;
+}
+
+/* slide2 next */
+.butterfly-8 {
+  top: 20%;
+  left: 20%;
+}
+
+/* slide2 back */
+.butterfly-9 {
+  bottom: 10%;
+  right: 48%;
+}
+
+/* slide2 extra */
+.butterfly-5 {
+  bottom: 48%;
+  right: 20%;
+}
+
+/* slide3 next */
+.butterfly-10 {
+  bottom: 48%;
+  left: 20%;
+}
+
+/* slide3 back */
+/* Solo para el slide 2, que tiene pocas líneas y sale muy arriba */
+#type-container.slide-2 #typed {
+  /* por ejemplo, bajas un poco el margin-top */
+  margin-top: 10vh;
+  /* si quieres, ajusta aquí font-size o cualquier otro desplazamiento */
+  /* font-size: clamp(1rem,4vw,2rem);  <-- si fuese necesario */
+}
+
+#type-container.slide-3 #typed {
+  /* por ejemplo, bajas un poco el margin-top */
+  margin-top: 5vh;
+  text-align: center;
+  /* si quieres, ajusta aquí font-size o cualquier otro desplazamiento */
+  /* font-size: clamp(1rem,4vw,2rem);  <-- si fuese necesario */
+}
+
+/* ===== FORMULARIO DE CONFIRMACIÓN ===== */
+#form-container {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: url("/img/background_pc.png") no-repeat center/cover;
+  font-family: "Alex Brush", cursive;
+  color: #bc6e6e;
+  text-align: center;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  #form-container {
+    background: url("/img/background_mobile.png") no-repeat center/cover;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+}
+
+#form-container h2 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  margin-bottom: 1.5rem;
+  color: #bc6e6e;
+}
+
+/* Estilos específicos para el título del segundo formulario */
+#datos-invitados h2 {
+  font-size: clamp(2rem, 6vw, 3.5rem) !important;
+  margin-bottom: 1.5rem !important;
+  color: #bc6e6e !important;
+  text-align: center !important;
+}
+
+@media (max-width: 768px) {
+  #form-container h2 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+
+  #datos-invitados h2 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+#form-container form {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 40vh;
+  max-height: 70vh;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Estilos específicos para el segundo formulario (datos-invitados) */
+#datos-invitados {
+  max-width: 900px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  padding: 2.5rem !important;
+  border-radius: 15px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 40vh !important;
+  max-height: 70vh !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+@media (max-width: 768px) {
+  #form-container form {
+    max-width: 90%;
+    width: 90%;
+    padding: 1.5rem;
+    min-height: 35vh;
+    max-height: 80vh;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+
+  #datos-invitados {
+    max-width: 90% !important;
+    width: 90% !important;
+    padding: 1.5rem !important;
+    min-height: 35vh !important;
+    max-height: 80vh !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Contenedor para los campos del formulario */
+.form-fields-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  flex: 1;
+  margin-bottom: 1rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Contenedor para nombre y apellido lado a lado en web */
+.name-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .name-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .form-fields-container {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Espaciado adicional para el segundo formulario en web */
+  #datos-invitados .form-fields-container {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Espaciado específico para los campos de invitados */
+  #datos-invitados .form-group {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-fields-container {
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* En pantallas medianas, usar 2 columnas */
+@media (min-width: 768px) {
+  .form-fields-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* En pantallas grandes, usar 3 columnas */
+@media (min-width: 1200px) {
+  .form-fields-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* En pantallas muy grandes, usar 4 columnas */
+@media (min-width: 1400px) {
+  .form-fields-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* El botón siempre centrado abajo */
+.form-submit-container {
+  text-align: center;
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-submit-container {
+    padding-top: 1rem;
+  }
+}
+
+.form-group {
+  margin-bottom: 0;
+  /* Quitamos el margin porque usamos grid gap */
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Campos que deben ocupar todo el ancho */
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Campos readonly siempre ocupan todo el ancho */
+.form-group input[readonly] {
+  grid-column: 1 / -1;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: #bc6e6e;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .form-group label {
+    margin-bottom: 0.3rem;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  }
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e2cadb;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  color: #333;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .form-group input,
+  .form-group select {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #bc6e6e;
+  box-shadow: 0 0 0 3px rgba(188, 110, 110, 0.1);
+}
+
+#form-container button[type="submit"] {
+  background: linear-gradient(45deg, #bc6e6e, #e2cadb);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: "Alex Brush", cursive;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  #form-container button[type="submit"] {
+    padding: 0.8rem 1.5rem;
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+    margin-top: 0.5rem;
+  }
+}
+
+#form-container button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(188, 110, 110, 0.3);
+}
+
+/* Estilos para el mensaje de confirmación */
+#form-container h2:only-child {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: #28a745;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  #form-container h2:only-child {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* Estilos para mensaje de error */
+#form-container h2:contains("error") {
+  color: #dc3545;
+}
+
+/* Mariposa para volver desde el formulario */
+.butterfly-back-form {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .butterfly-back-form {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 15px;
+    left: 15px;
+  }
+}
+
+/* ===== Slide 4 - Navegación al formulario ===== */
+.butterfly-11 {
+  position: absolute;
+  right: 20%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* slide4 form */
+.butterfly-12 {
+  position: absolute;
+  left: 25%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* slide4 back */
+
+/* Clase para mostrar el formulario */
+#form-container.show {
+  display: flex !important;
+}
