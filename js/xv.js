@@ -11,7 +11,7 @@ const slides = [
     "y empiezo mi adolescencia con muchas esperanzas y sueños.",
     "Por esa razón quiero que compartas conmigo este día tan especial...",
   ],
-  ["Padrinos", "Susan Durand", "y", "Alex Chamba"],
+  ["Padrinos", "Susan Durand", "y", "Felicino Chamba"],
   [
     "Padres",
     "Alex Becerra",
