@@ -14,9 +14,9 @@ const slides = [
   ["Padrinos", "Susan Durand", "y", "Felicino Chamba"],
   [
     "Padres",
-    "Alex Becerra",
+    "Alex Becerra C.",
     "y",
-    "Marlene Durand",
+    "Nazia Durand C.",
     "Tenemos el agrado de invitaros a celebrar los 15 años de nuestra hija",
   ],
   [
