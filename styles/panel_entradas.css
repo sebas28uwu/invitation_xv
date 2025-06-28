@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f9bbcd 0%, #fff8fc 100%);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-container {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(139,90,139,0.18);
+    padding: 2.5rem 2.2rem 2.2rem 2.2rem;
+    max-width: 350px;
+    width: 95vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-container h2 {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: #a14a7b;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+.login-form label {
+    color: #8b5a8b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+.login-form input {
+    border: 1.5px solid #f9bbcd;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-size: 1.1rem;
+    outline: none;
+    background: #fff8fc;
+    color: #6d3576;
+    transition: border 0.2s;
+}
+.login-form input:focus {
+    border: 1.5px solid #a14a7b;
+}
+.login-form button {
+    background: linear-gradient(90deg, #bc6e6e 0%, #dda0dd 100%);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 0;
+    border-radius: 18px;
+    font-size: 1.15rem;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 16px rgba(221,160,221,0.13);
+}
+.login-form button:hover {
+    background: linear-gradient(90deg, #dda0dd 0%, #bc6e6e 100%);
+}
+.login-error {
+    color: #e74c3c;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    min-height: 1.2em;
+    text-align: center;
+}
+.panel {
+    display: none;
+    width: 100vw;
+    min-height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2.5rem 0 2rem 0;
+    background: transparent;
+}
+@media (max-width: 600px) {
+    .login-container {
+        padding: 1.5rem 0.7rem;
+    }
+    .panel {
+        padding: 1.2rem 0 1rem 0;
+    }
+}
+
+.admin-table, .security-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff8fc;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(139,90,139,0.10);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    font-size: 1.08rem;
+}
+.admin-table th, .security-table th {
+    background: #f9bbcd;
+    color: #8b5a8b;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1.18rem;
+    font-weight: 700;
+    padding: 1rem 0.7rem;
+    border-bottom: 2px solid #f9bbcd;
+    text-align: center;
+}
+.admin-table td, .security-table td {
+    padding: 0.85rem 0.7rem;
+    border-bottom: 1px solid #f3e0ef;
+    text-align: center;
+    color: #6d3576;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+.admin-table tr:last-child td, .security-table tr:last-child td {
+    border-bottom: none;
+}
+.admin-table tbody tr:hover, .security-table tbody tr:hover {
+    background: #ffe0f0;
+    transition: background 0.2s;
+}
+
+.btn-aceptar, .btn-rechazar, .btn-previsualizar, .btn-descargar, .btn-enviar {
+    border: none;
+    border-radius: 18px;
+    padding: 0.6rem 1.3rem;
+    font-size: 1.05rem;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+    margin: 0 0.2rem 0.2rem 0.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(221,160,221,0.10);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.2px;
+}
+.btn-aceptar {
+    background: linear-gradient(90deg, #b6e2a1 0%, #7ed957 100%);
+    color: #2d5c1e;
+}
+.btn-aceptar:hover {
+    background: linear-gradient(90deg, #7ed957 0%, #b6e2a1 100%);
+    color: #1e3d13;
+}
+.btn-rechazar {
+    background: linear-gradient(90deg, #ffb6b6 0%, #e57373 100%);
+    color: #a14a4a;
+}
+.btn-rechazar:hover {
+    background: linear-gradient(90deg, #e57373 0%, #ffb6b6 100%);
+    color: #7b2323;
+}
+.btn-previsualizar {
+    background: linear-gradient(90deg, #dda0dd 0%, #f9bbcd 100%);
+    color: #8b5a8b;
+}
+.btn-previsualizar:hover {
+    background: linear-gradient(90deg, #f9bbcd 0%, #dda0dd 100%);
+    color: #6d3576;
+}
+.btn-descargar {
+    background: linear-gradient(90deg, #87ceeb 0%, #98d8e8 100%);
+    color: #2c5aa0;
+}
+.btn-descargar:hover {
+    background: linear-gradient(90deg, #98d8e8 0%, #87ceeb 100%);
+    color: #1e3d6b;
+}
+.btn-enviar {
+    background: linear-gradient(90deg, #bc6e6e 0%, #dda0dd 100%);
+    color: #fff;
+}
+.btn-enviar:disabled {
+    background: #e0d0e0;
+    color: #bbaabb;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.btn-enviar:hover:not(:disabled) {
+    background: linear-gradient(90deg, #dda0dd 0%, #bc6e6e 100%);
+    color: #fff;
+}
+
+/* Mejorar la sección del escáner */
+.scanner-section {
+    background: #fff8fc;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(139,90,139,0.10);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    border: 1px solid rgba(139,90,139,0.08);
+}
+.scan-result {
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 1rem;
+    min-height: 1.5em;
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+#admin-panel, #security-panel {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2.5rem 1.2rem 2rem 1.2rem;
+    background: transparent;
+}
+
+@media (max-width: 700px) {
+    .admin-table, .security-table {
+        font-size: 0.98rem;
+    }
+    #admin-panel, #security-panel {
+        padding: 1.2rem 0.2rem 1rem 0.2rem;
+    }
+}
+
+/* Para textos sobre la invitación generada en canvas */
+/* Esto es solo referencia, el canvas usa ctx.font pero así queda documentado el estilo */
+.invitacion-nombre {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #a14a7b;
+}
+.invitacion-acompanantes {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: #3d2a3d;
+}
+
+/* Estilos específicos para el panel de seguridad */
+.security-table {
+    margin-top: 1rem;
+}
+
+.security-table th {
+    background: linear-gradient(135deg, #f9bbcd 0%, #dda0dd 100%);
+    color: #8b5a8b;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1.2rem 0.8rem;
+    border-bottom: 2px solid #f9bbcd;
+    text-align: center;
+}
+
+.security-table td {
+    padding: 1rem 0.8rem;
+    border-bottom: 1px solid #f3e0ef;
+    text-align: center;
+    color: #6d3576;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+.security-table tbody tr:hover {
+    background: linear-gradient(135deg, #ffe0f0 0%, #f8f9fa 100%);
+    transition: background 0.3s ease;
+} 
